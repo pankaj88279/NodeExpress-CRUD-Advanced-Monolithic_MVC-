@@ -5,6 +5,7 @@ let UserSchema=new mongoose.Schema({
                     firstname:{
                         type:String,
                         require:true,
+                        
                     },
                     lastname:{
                         type:String,
@@ -14,6 +15,7 @@ let UserSchema=new mongoose.Schema({
                     eamil:{
                         type:String,
                         require:true,
+                        unique:true
                     },
                     password_hash:{
                         type:String,
@@ -26,7 +28,7 @@ let UserSchema=new mongoose.Schema({
                     }
                    
                       },{
-                        timesTamp:true,
+                        timestamps:true,
 
                             })
 const User= mongoose.model('User',UserSchema)

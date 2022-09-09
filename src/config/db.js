@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://pankaj:pankaj1993@cluster0.4gb2s.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb://localhost:27017')
 .then((d)=>{
     console.log('connected')
 }).catch(()=>{
