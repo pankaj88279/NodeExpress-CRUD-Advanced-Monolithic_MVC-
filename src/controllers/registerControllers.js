@@ -1,10 +1,13 @@
+
+const express=require('express');
 const { User } = require("../models/user")
 
 
-var registerController=(req,res)=>{
+
+let registerController=(req,res)=>{
 
     const user = new User(req.body)
-    user.save()
+        user.save()
     .then((d)=>{
         res.status(200).json({
             msg:"register successfully",
@@ -18,7 +21,9 @@ var registerController=(req,res)=>{
             error:e
         })
     })
+    }
     
-}
+    
+    
 
 exports.registerController=registerController

@@ -12,7 +12,7 @@ let UserSchema=new mongoose.Schema({
                         require:true,
 
                     },
-                    eamil:{
+                    email:{
                         type:String,
                         require:true,
                         unique:true
@@ -20,11 +20,12 @@ let UserSchema=new mongoose.Schema({
                     password_hash:{
                         type:String,
                         require:true,
+                       
                     },
                     role:{
                         type:String,
                         enum:["student","admin","teacher"],
-                        default:"student"
+                        default:"admin"
                     }
                    
                       },{

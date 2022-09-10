@@ -4,6 +4,6 @@ const { studentController } = require('../controllers/studentControllers');
 
 const studentRoute=express.Router();
 
-studentRoute.get('/student',studentController)
+studentRoute.post('/student',studentController)
 
 exports.studentRoute=studentRoute

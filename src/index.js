@@ -10,7 +10,8 @@ require('dotenv').config();
 
 app.use(express.json());
 
-app.use(studentRoute)
+app.use('/api',studentRoute)
+
 app.use('/api',registerRoute)
 app.use('/api',loginRoute)
 
