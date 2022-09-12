@@ -3,6 +3,7 @@ const express=require('express')
 
 const{User}=require('../models/user')
 
+const bcrypt = require('bcrypt');
 let loginController=(req,res)=>{
     
     console.log(req.body)
@@ -14,25 +15,39 @@ let loginController=(req,res)=>{
             const user = new User(req.body)
         user.save()
        .then((d)=>{
-        res.status(200).json({
-            msg:"login successfully",
-            data:d
+        res.status(403).json({
+            msg:"invalid",
+            data:req.body
         })
 
     })
     .catch((e)=>{
-        res.status(403).json({
-            msg:"login unsccessful",
+        res.status(200).json({
+            msg:"error",
             error:e
         })
 
     })
 
         }else{
-            res.status(404).json({
-                msg:"login unsccessful",
+            console.log("d",d.password_hash)
+            if(bcrypt.compareSync(req.body.password_hash, d.password_hash,)){
+
+                res.status(200).json({
+                    result:"welcome",
+                    msg:"invalid",
+                    data:req.body
+                })
+            }else{
+                res.status(404).json({
+                    msg:"error"
+                    
+                })
                 
-            })
+                
+            }
+         
+           
 
         }
     })
