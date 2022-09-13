@@ -14,6 +14,10 @@ app.use('/api',studentRoute)
 
 app.use('/api',registerRoute)
 app.use('/api',loginRoute)
+app.get("/test",(req,res)=>{
+    res.json({msg:"hello pankaj you are selected in thoughtwin"})
+
+})
 
 const port= process.env.PORT
 
