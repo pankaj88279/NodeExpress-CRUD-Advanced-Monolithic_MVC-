@@ -6,17 +6,18 @@ const bcrypt = require('bcrypt');
 
 
 
-let registerController=(req,res)=>{
+let registerController=(req,res)=>{ 
 
     User.findOne({email:req.body.email})
     .then((d)=>{
-        console.log(d);
+       console.log(d);
         if(d ===null){
-         const salt = 10;
-           
-       const hash = bcrypt.hashSync(req.body.password_hash, salt);
-       req.body.password_hash=hash;
-
+    console.log(req.body)  
+    const salt = 10;
+   // console.log(req.body.password_hash)
+   const hash = bcrypt.hashSync(req.body.password_hash, salt);
+   req.body.password_hash=hash
+     
         const user = new User(req.body)
         user.save()
         .then((d)=>{

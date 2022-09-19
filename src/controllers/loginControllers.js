@@ -1,85 +1,45 @@
 
-const express=require('express')
-const jwt =require('jsonwebtoken');
-const{User}=require('../models/user')
+const express = require('express')
+
+const jwt = require('jsonwebtoken');
+
+const { User } = require('../models/user')
 
 const bcrypt = require('bcrypt');
 
-let loginController=(req,res)=>{
+let loginController = (req,res) =>{
     
-    // console.log(req.body)
-    var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
-    
-    User.findOne({email:req.body.email})
-    .then((d)=>{
-        // console.log(d)
-        if(d ===null){
-            const user = new User(req.body)
-        user.save()
-       .then((d)=>{
-        // var token = jwt.sign(req.body, process.env.JWT_SECRET);
-        // var token = jwt.sign(req.body, process.env.JWT_SECRET);
-     
-        res.status(403).json({
-            msg:"invalid",
-            data:req.body,
-            token
-        })
+    User.findOne({email:req.body.email}, function (err, user) {
+        const { email,password_hash } = req.body 
+        console.log(req.body)
+       
+        if(user !== null){
+           console.log(user)
+            if(bcrypt.compareSync(password_hash,user.password_hash)){
+                     
+                        res.status(200).json({
+                          msg:"login successfully",
+                          email:user.email,
+                          role:user.role,
 
-    })
-    .catch((e)=>{
-        res.status(200).json({
-            msg:"error",
-            error:e
-        })
-
-    })
-
-        }else{
-            // console.log("d",d)
-            const x=bcrypt.compareSync(req.body.password_hash, d.password_hash,)
-            if(bcrypt.compareSync(req.body.password_hash, d.password_hash)){
-
-                res.status(200).json({
-                    result:"welcome",
-                    msg:"invalid",
-                    data:d
-                })
+                          token: jwt.sign({user:user.email,role:user.role},process.env.JWT_SECRET, {
+                            expiresIn: "1d"
+                         
+           })
+         })
             }else{
-                res.status(404).json({
-                    msg:"error"
-                    
+                res.status(401).json({
+                    msg:"error",
                 })
-                
-                
             }
-         
-           
-
+        }else{
+            res.status(403).json({
+                msg:"Email not found",
+            })
         }
-    })
-    .catch((e)=>{
-        res.status(404).json({
-            msg:"error"
-            
-        })
-        
-    })
-    
-        
-        
-
-    }
+    });
+   
+}
 
     
-
-    
-        
-        
-    
-    
-    
-    
-
-
-exports.loginController=loginController
+exports.loginController = loginController
