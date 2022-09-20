@@ -5,6 +5,6 @@ const { authMiddleware, adminTeacherAuth } = require('../middilewear/Authmiddile
 
 const studentRoute=express.Router();
 
-studentRoute.post('/student',authMiddleware,adminTeacherAuth,studentController)
+studentRoute.post('/student/created',authMiddleware,adminTeacherAuth,studentController)
 
 exports.studentRoute=studentRoute

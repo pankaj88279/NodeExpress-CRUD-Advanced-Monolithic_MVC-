@@ -46,4 +46,4 @@ let adminTeacherAuth = (req,res,next)=>{
 }
 
 
-module.exports={adminAuth,authMiddleware,adminTeacherAuth}
+module.exports={authMiddleware,adminAuth,adminTeacherAuth}
