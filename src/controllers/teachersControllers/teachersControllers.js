@@ -8,8 +8,11 @@ const app= express();
 
 let teacherControllers=(req,res)=>{
     console.log(req.body)
-   
-    const teacher = new Teacher(req.body);
+    console.log(Teacher)
+   Teacher.findOne({email:req.body.email})
+   .then((d)=>{
+    if(d === null){
+        const teacher = new Teacher(req.body);
     teacher.save()
     .then((d)=>{
         res.status(200).json({
@@ -24,10 +27,24 @@ let teacherControllers=(req,res)=>{
             
         })
     })
+  }else{
+
+    res.status(405).json({
+        msg:"not found",
         
-  
+    })
+
+}
+})  
+    .catch((e)=>{
+        res.status(404).json({
+            msg:"error",
+            
+        })
+
+   }) 
+
     }
-    
 
 
 

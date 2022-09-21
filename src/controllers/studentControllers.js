@@ -1,12 +1,14 @@
-const express=require('express');
-const {Student,User} = require('../models/user');
-const{mongoose}=require('../config/db')
 
-    let studentController=(req,res)=>{
-   
+const {Student} = require('../models/user');
 
-    
-        const studentobject = new Student(req.body);
+  
+let studentController=(req,res)=>{
+    // Store the student only if student email is not available
+    Student.findOne({email:req.body.email})
+    .then((d)=>{
+        console.log(d)
+        if(d === null){
+            const studentobject = new Student(req.body);
         studentobject.save()
          .then((d)=>{
              res.status(200).json({
@@ -22,6 +24,27 @@ const{mongoose}=require('../config/db')
         
     
     })
-} 
+        }else{
+            res.status(403).json({
+                msg:"email not found",
+                
+        })
+       
+        }
+    })
+    .catch((e)=>{
+        res.status(400).json({
+            msg:"error",
+            
+    })
+
+    })
+}
+
+
+    
+
+      
+
 
 exports.studentController=studentController
